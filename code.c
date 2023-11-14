@@ -1,9 +1,16 @@
 #include "utilities.h"
 
+struct reading {
+    char date[30];
+    float bloodIron;
+};
+
 int main()
 {
     // array of daily readings
-    reading daily_readings[100];
+    struct reading daily_readings[1000];
+    struct reading max_store; 
+    struct reading min_store; 
 
     char line[buffer_size];
     char filename[buffer_size];
@@ -19,6 +26,8 @@ int main()
 
     char choice;
     int counter = 0;
+    int max_count = 0;
+    int min_count = 0;
     float mean = 0;
 
     while (1)
@@ -86,11 +95,40 @@ int main()
 
         case 'C':
         case 'c':
-            return 0;
+            counter =0;
+            while (fgets(line, buffer_size, input))
+            {
+                tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+                mean += daily_readings[counter].bloodIron;
+                counter++;
+            }
+            if (counter > 0) {
+                struct reading min_store = daily_readings[0];
+            }
+            for (int i = 0; i < counter; i++) {
+                if (daily_readings[1].bloodIron > daily_readings[i].bloodIron) {
+                    min_store = daily_readings[i];
+                }
+            }
+            printf("Your lowest blood iron was %.2f\n", min_store.bloodIron);
+            fclose(input);
             break;
 
         case 'D':
         case 'd':
+            counter =0;
+            while (fgets(line, buffer_size, input))
+            {
+                tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+                mean += daily_readings[counter].bloodIron;
+                counter++;
+            }
+            struct reading max_store = daily_readings[0];
+            for (int i = 0; i < counter; i++) {
+                if (daily_readings[1].bloodIron < daily_readings[i].bloodIron) {
+                    max_store = daily_readings[i];
+                }
+            }
             return 0;
             break;
 

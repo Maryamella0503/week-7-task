@@ -60,7 +60,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
  * @param mode the mode (r/w/a/r+/w+/a+)
  * @return FILE* The file object to store the opened file in.
  */
-FILE *open_file(char *filename, char *mode)
+FILE *open_file(char *file, char *mode)
 {
     // to do
 }
